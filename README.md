@@ -7,7 +7,7 @@ marketplace once, then install any plugin from it:
 
 ```text
 /plugin marketplace add fedelemantuano/claude-plugins
-/plugin install <plugin-name>@claude-plugins
+/plugin install <plugin-name>@fedelemantuano-claude-plugins
 ```
 
 Each plugin lives in its own directory under [`plugins/`](plugins/) with its own
