@@ -1,4 +1,31 @@
-# llm-wiki-for-code — Complete User Guide
+# claude-plugins — Claude Code plugin marketplace
+
+A Claude Code / Cowork plugin **marketplace**. It bundles one or more plugins under
+a single install source, described by
+[`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json). Add the
+marketplace once, then install any plugin from it:
+
+```text
+/plugin marketplace add fedelemantuano/claude-plugins
+/plugin install <plugin-name>@claude-plugins
+```
+
+Each plugin lives in its own directory under [`plugins/`](plugins/) with its own
+`.claude-plugin/plugin.json`. New plugins are added by dropping a directory there
+and appending an entry to `marketplace.json`.
+
+## Plugins in this marketplace
+
+| Plugin | Version | What it does |
+| ------ | ------- | ------------ |
+| [`llm-wiki-for-code`](#llm-wiki-for-code--complete-user-guide) | 0.3.0 | Maintains a structured code wiki in `code-docs/`, auto-updated after every file edit, to cut token usage in coding sessions |
+
+For now the marketplace ships a single plugin, `llm-wiki-for-code`, documented in
+full below. More plugins will be added here over time.
+
+---
+
+## llm-wiki-for-code — Complete User Guide
 
 A Claude Code / Cowork plugin that maintains a structured code wiki in `code-docs/`
 and automatically keeps it up to date after every file edit, reducing token usage
@@ -49,10 +76,10 @@ cache.
 
 | Component | Type | What it does |
 | --------- | ---- | ------------ |
-| `skills/llm-wiki-for-code` | Skill | Teaches Claude to read `code-docs/` before source files |
-| `hooks/hooks.json` | Hook config | Registers PostToolUse and SessionStart events |
-| `hooks/scripts/update-wiki.py` | PostToolUse hook | Regenerates the wiki section for the edited file |
-| `hooks/scripts/check-wiki.sh` | SessionStart hook | Reports wiki status (module count, last updated) |
+| `plugins/llm-wiki-for-code/skills/llm-wiki-for-code` | Skill | Teaches Claude to read `code-docs/` before source files |
+| `plugins/llm-wiki-for-code/hooks/hooks.json` | Hook config | Registers PostToolUse and SessionStart events |
+| `plugins/llm-wiki-for-code/hooks/scripts/update-wiki.py` | PostToolUse hook | Regenerates the wiki section for the edited file |
+| `plugins/llm-wiki-for-code/hooks/scripts/check-wiki.sh` | SessionStart hook | Reports wiki status (module count, last updated) |
 
 ### Token flow per session
 
@@ -92,11 +119,11 @@ Installation is done with the `/plugin` command inside a Claude Code session.
 In a Claude Code session, add the marketplace and install the plugin:
 
 ```text
-/plugin marketplace add fedelemantuano/llm-wiki-for-code
-/plugin install llm-wiki-for-code@fedelemantuano
+/plugin marketplace add fedelemantuano/claude-plugins
+/plugin install llm-wiki-for-code@claude-plugins
 ```
 
-`fedelemantuano` is the marketplace name defined in `marketplace.json`;
+`claude-plugins` is the marketplace name defined in `marketplace.json`;
 `llm-wiki-for-code` is the plugin name.
 
 ### Option B — Install from a local clone
@@ -104,8 +131,8 @@ In a Claude Code session, add the marketplace and install the plugin:
 If you have the repository checked out locally:
 
 ```text
-/plugin marketplace add /path/to/llm-wiki-for-code
-/plugin install llm-wiki-for-code@fedelemantuano
+/plugin marketplace add /path/to/claude-plugins
+/plugin install llm-wiki-for-code@claude-plugins
 ```
 
 The path must point at the directory containing `.claude-plugin/marketplace.json`.
@@ -323,13 +350,13 @@ These are natural-language phrases you say to Claude:
 In a Claude Code session:
 
 ```text
-/plugin uninstall llm-wiki-for-code@fedelemantuano
+/plugin uninstall llm-wiki-for-code@claude-plugins
 ```
 
 To also drop the marketplace entry:
 
 ```text
-/plugin marketplace remove fedelemantuano
+/plugin marketplace remove claude-plugins
 ```
 
 ### Remove the wiki from your project
@@ -372,7 +399,7 @@ Claude can still read them — the hook just won't update them.
    repository:
 
    ```bash
-   TOOL_INPUT='{"path":"your_file.py"}' python3 hooks/scripts/update-wiki.py
+   TOOL_INPUT='{"path":"your_file.py"}' python3 plugins/llm-wiki-for-code/hooks/scripts/update-wiki.py
    ```
 
    The script reads the tool payload from the `TOOL_INPUT` environment variable
@@ -391,7 +418,7 @@ Claude can still read them — the hook just won't update them.
 which bash
 ```
 
-**Fix on non-standard systems:** Edit `hooks/hooks.json` to use `sh` instead of `bash`:
+**Fix on non-standard systems:** Edit `plugins/llm-wiki-for-code/hooks/hooks.json` to use `sh` instead of `bash`:
 
 ```json
 "command": "sh ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/check-wiki.sh"
@@ -405,7 +432,7 @@ There are two timeouts, and the shorter one wins:
 
 - The `claude -p` subprocess call in `update-wiki.py` (`call_claude`, `timeout=60`).
   This is the real limiter on slow generations.
-- The hook wrapper in `hooks/hooks.json` (`"timeout": 90`), which kills the whole
+- The hook wrapper in `plugins/llm-wiki-for-code/hooks/hooks.json` (`"timeout": 90`), which kills the whole
   hook process.
 
 For very large files, raise **both**. In `update-wiki.py`:
@@ -419,7 +446,7 @@ result = subprocess.run(
 )
 ```
 
-And in `hooks/hooks.json`, set a wrapper timeout above the subprocess one:
+And in `plugins/llm-wiki-for-code/hooks/hooks.json`, set a wrapper timeout above the subprocess one:
 
 ```json
 {
@@ -471,7 +498,7 @@ All configuration is done by editing the plugin files directly after installatio
 
 ### Change the model used for wiki updates
 
-In `hooks/scripts/update-wiki.py`, find the `call_claude` function:
+In `plugins/llm-wiki-for-code/hooks/scripts/update-wiki.py`, find the `call_claude` function:
 
 ```python
 ["claude", "-p", "--model", "claude-haiku-4-5-20251001", prompt]
