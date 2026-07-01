@@ -120,10 +120,10 @@ In a Claude Code session, add the marketplace and install the plugin:
 
 ```text
 /plugin marketplace add fedelemantuano/claude-plugins
-/plugin install llm-wiki-for-code@claude-plugins
+/plugin install llm-wiki-for-code@fedelemantuano-claude-plugins
 ```
 
-`claude-plugins` is the marketplace name defined in `marketplace.json`;
+`fedelemantuano-claude-plugins` is the marketplace name defined in `marketplace.json`;
 `llm-wiki-for-code` is the plugin name.
 
 ### Option B — Install from a local clone
@@ -132,7 +132,7 @@ If you have the repository checked out locally:
 
 ```text
 /plugin marketplace add /path/to/claude-plugins
-/plugin install llm-wiki-for-code@claude-plugins
+/plugin install llm-wiki-for-code@fedelemantuano-claude-plugins
 ```
 
 The path must point at the directory containing `.claude-plugin/marketplace.json`.
@@ -350,13 +350,13 @@ These are natural-language phrases you say to Claude:
 In a Claude Code session:
 
 ```text
-/plugin uninstall llm-wiki-for-code@claude-plugins
+/plugin uninstall llm-wiki-for-code@fedelemantuano-claude-plugins
 ```
 
 To also drop the marketplace entry:
 
 ```text
-/plugin marketplace remove claude-plugins
+/plugin marketplace remove fedelemantuano-claude-plugins
 ```
 
 ### Remove the wiki from your project
