@@ -1,0 +1,28 @@
+{
+  "name": "fedelemantuano",
+  "owner": {
+    "name": "Fedele Mantuano",
+    "url": "https://github.com/fedelemantuano"
+  },
+  "plugins": [
+    {
+      "name": "llm-wiki-for-code",
+      "source": "./",
+      "description": "Maintains a structured code wiki in code-docs/ to reduce token usage in Claude Code sessions. Auto-updates after every file edit via PostToolUse hook.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Fedele Mantuano",
+        "url": "https://github.com/fedelemantuano"
+      },
+      "homepage": "https://github.com/fedelemantuano/llm-wiki-for-code",
+      "license": "MIT",
+      "keywords": [
+        "wiki",
+        "documentation",
+        "token-optimization",
+        "hooks",
+        "codebase-navigation"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "llm-wiki-for-code",
+  "version": "0.3.0",
+  "description": "Maintains a structured code wiki in code-docs/ to reduce token usage in Claude Code sessions. Auto-updates after every file edit via PostToolUse hook.",
+  "author": {
+    "name": "Fedele Mantuano"
+  },
+  "hooks": "./hooks/hooks.json"
+}

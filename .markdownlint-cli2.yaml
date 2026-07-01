@@ -1,0 +1,13 @@
+config:
+  # Line length is unbounded — docs contain long URLs, tables, and prose.
+  MD013: false
+  # Allow duplicate headings under different parents (e.g. repeated "## Gotchas").
+  MD024:
+    siblings_only: true
+  # Fenced code blocks must declare a language (MD040) — kept on.
+  # Tables use padded pipes.
+  MD060:
+    style: leading_and_trailing
+
+globs:
+  - "**/*.md"
