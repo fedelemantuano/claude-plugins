@@ -59,8 +59,9 @@ def validate_plugin(entry: dict, source: Path, versions: dict[Path, str]) -> Non
         f"field — {manifest_path} is the single source",
     )
 
-    for subdir in ("skills", "hooks"):
-        check((source / subdir).is_dir(), f"{source / subdir}: missing directory")
+    check((source / "skills").is_dir(), f"{source / 'skills'}: missing directory")
+    if "hooks" in manifest:
+        check((source / "hooks").is_dir(), f"{source / 'hooks'}: missing directory")
 
 
 def main() -> None:

@@ -22,6 +22,24 @@
         "hooks",
         "codebase-navigation"
       ]
+    },
+    {
+      "name": "spec-driven",
+      "source": "./plugins/spec-driven",
+      "description": "Skills for repositories that write their decisions down. Ships conformance-review: a citation-required review of uncommitted changes against the repo's specs, issues, ADRs, glossary, and standing rules.",
+      "author": {
+        "name": "Fedele Mantuano",
+        "url": "https://github.com/fedelemantuano"
+      },
+      "homepage": "https://github.com/fedelemantuano/claude-plugins",
+      "license": "MIT",
+      "keywords": [
+        "code-review",
+        "conformance",
+        "spec",
+        "adr",
+        "pre-commit"
+      ]
     }
   ]
 }
