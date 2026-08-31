@@ -16,9 +16,9 @@ and appending an entry to `marketplace.json`.
 
 ## Plugins in this marketplace
 
-| Plugin | Version | What it does |
-| ------ | ------- | ------------ |
-| [`llm-wiki-for-code`](#llm-wiki-for-code--complete-user-guide) | 0.3.0 | Maintains a structured code wiki in `code-docs/`, auto-updated after every file edit, to cut token usage in coding sessions |
+| Plugin | What it does |
+| ------ | ------------ |
+| [`llm-wiki-for-code`](#llm-wiki-for-code--complete-user-guide) | Maintains a structured code wiki in `code-docs/`, auto-updated after every file edit, to cut token usage in coding sessions |
 
 For now the marketplace ships a single plugin, `llm-wiki-for-code`, documented in
 full below. More plugins will be added here over time.

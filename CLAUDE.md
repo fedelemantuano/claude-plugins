@@ -5,6 +5,7 @@ Marketplace of Claude Code plugins. Manifest: `.claude-plugin/marketplace.json`;
 ## Workflow
 
 - After changing code or docs, run `pre-commit run --files <changed files>` and fix failures before committing.
+- When adding a new plugin under `plugins/`, update `README.md`: add a row to the "Plugins in this marketplace" table and a section documenting the plugin (what it does, install, usage).
 
 ## Agent skills
 
