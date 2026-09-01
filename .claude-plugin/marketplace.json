@@ -26,7 +26,7 @@
     {
       "name": "spec-driven",
       "source": "./plugins/spec-driven",
-      "description": "Skills for repositories that write their decisions down. Ships conformance-review: a citation-required review of uncommitted changes against the repo's specs, issues, ADRs, glossary, and standing rules.",
+      "description": "Skills for repositories that write their decisions down. Ships conformance-review (citation-required review of uncommitted changes against the repo's specs, issues, ADRs, glossary, and standing rules) and prove-it-works (evidence-based verification that branch work actually runs, chaining into conformance-review on failure).",
       "author": {
         "name": "Fedele Mantuano",
         "url": "https://github.com/fedelemantuano"

@@ -5,6 +5,7 @@ Marketplace of Claude Code plugins. Manifest: `.claude-plugin/marketplace.json`;
 ## Workflow
 
 - After changing code or docs, run `pre-commit run --files <changed files>` and fix failures before committing.
+- After adding, removing, or renaming a plugin or skill, update in the same change: the "Plugins in this marketplace" table in `README.md`, the plugin's section in `README.md`, and its entry in `.claude-plugin/marketplace.json`. Run `python3 .github/scripts/validate_plugin.py` to confirm the manifests still agree.
 - When adding a new plugin under `plugins/`, update `README.md`: add a row to the "Plugins in this marketplace" table and a section documenting the plugin (what it does, install, usage).
 
 ## Agent skills

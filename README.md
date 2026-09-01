@@ -19,7 +19,7 @@ and appending an entry to `marketplace.json`.
 | Plugin | What it does |
 | ------ | ------------ |
 | [`llm-wiki-for-code`](#llm-wiki-for-code--complete-user-guide) | Maintains a structured code wiki in `code-docs/`, auto-updated after every file edit, to cut token usage in coding sessions |
-| [`spec-driven`](#spec-driven) | Skills for repositories that write their decisions down; ships `conformance-review`, a citation-required review of uncommitted changes against the repo's specs, ADRs, glossary, and standing rules |
+| [`spec-driven`](#spec-driven) | Skills for repositories that write their decisions down; ships `conformance-review` (citation-required review of uncommitted changes against the repo's specs, ADRs, glossary, and standing rules) and `prove-it-works` (evidence-based verification of branch work) |
 
 More plugins will be added here over time.
 
@@ -44,6 +44,20 @@ written authority. It discovers where specs and rules live by following the repo
 
 Trigger it by asking for a review of your changes, a pre-commit check, or whether an issue's work is finished —
 or invoke it directly with `/spec-driven:conformance-review`.
+
+### prove-it-works
+
+The running counterpart of `conformance-review`. Diffs `HEAD` against the fork point with the default branch,
+discovers how the repository runs and tests itself (workflow rules, CI, build files), executes those gates, and
+reports evidence per claim — **verified**, **failed**, or **unverified**, never "should work".
+
+- Report-only on failures: it proves, it does not fix, and it never runs anything with effects beyond the local
+  checkout (no deploys, no publishing, no real-data migrations).
+- When a gate fails, it chains into `conformance-review` to explain the failure against the written spec, and
+  delivers evidence and review together.
+
+Trigger it by asking "does it work", "prove it", "is this done", or for verification before a merge — or invoke it
+directly with `/spec-driven:prove-it-works`.
 
 ---
 
