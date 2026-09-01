@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Bump the semver `version` field in the plugin and marketplace manifests.
+"""Bump the shared semver `version` field in every plugin manifest.
 
 Usage: bump_version.py {major|minor|patch}
 
-Rewrites plugins/llm-wiki-for-code/.claude-plugin/plugin.json and the matching
-entry in .claude-plugin/marketplace.json in place, and writes
+All plugins under plugins/ share one version. Rewrites each
+plugins/*/.claude-plugin/plugin.json in place, and writes
 `previous_version` / `new_version` to $GITHUB_OUTPUT when running in Actions.
+The marketplace manifest carries no version — plugin.json is the single source.
 """
 
 from __future__ import annotations
@@ -16,15 +17,30 @@ import re
 import sys
 from pathlib import Path
 
-MANIFEST = Path("plugins/llm-wiki-for-code/.claude-plugin/plugin.json")
-MARKETPLACE = Path(".claude-plugin/marketplace.json")
+PLUGINS_DIR = Path("plugins")
 SEMVER = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
+
+
+def plugin_manifests() -> list[Path]:
+    manifests = sorted(PLUGINS_DIR.glob("*/.claude-plugin/plugin.json"))
+    if not manifests:
+        sys.exit(f"error: no plugin manifests found under {PLUGINS_DIR}/")
+    return manifests
+
+
+def current_version(manifests: list[Path]) -> str:
+    versions = {path: json.loads(path.read_text())["version"] for path in manifests}
+    unique = set(versions.values())
+    if len(unique) != 1:
+        details = ", ".join(f"{path}={version}" for path, version in versions.items())
+        sys.exit(f"error: plugin versions diverge — {details}")
+    return unique.pop()
 
 
 def bump(version: str, release_type: str) -> str:
     match = SEMVER.match(version)
     if not match:
-        sys.exit(f"error: version {version!r} in {MANIFEST} is not MAJOR.MINOR.PATCH")
+        sys.exit(f"error: version {version!r} is not MAJOR.MINOR.PATCH")
 
     major, minor, patch = (int(part) for part in match.groups())
     if release_type == "major":
@@ -51,11 +67,12 @@ def main() -> None:
     if len(sys.argv) != 2:
         sys.exit(__doc__)
 
-    previous = json.loads(MANIFEST.read_text())["version"]
+    manifests = plugin_manifests()
+    previous = current_version(manifests)
     new = bump(previous, sys.argv[1])
 
-    rewrite_version(MANIFEST, previous, new)
-    rewrite_version(MARKETPLACE, previous, new)
+    for manifest in manifests:
+        rewrite_version(manifest, previous, new)
 
     print(f"{previous} -> {new}")
     github_output = os.environ.get("GITHUB_OUTPUT")

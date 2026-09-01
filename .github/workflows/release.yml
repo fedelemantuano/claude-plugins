@@ -39,7 +39,7 @@ jobs:
             echo "No release label found. Skipping release."
           fi
 
-  # Bump plugin.json version, commit it on main, and tag the commit
+  # Bump the shared version in every plugin.json, commit it on main, and tag the commit
   release:
     needs: check-release
     if: needs.check-release.outputs.should_release == 'true'
@@ -69,7 +69,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add plugins/llm-wiki-for-code/.claude-plugin/plugin.json .claude-plugin/marketplace.json
+          git add 'plugins/*/.claude-plugin/plugin.json'
           git commit -m "chore(release): v${NEW_VERSION} [skip ci]"
           git tag -a "v${NEW_VERSION}" -m "Release v${NEW_VERSION}"
           git push origin HEAD:main

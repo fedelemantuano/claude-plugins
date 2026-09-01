@@ -9,7 +9,6 @@
       "name": "llm-wiki-for-code",
       "source": "./plugins/llm-wiki-for-code",
       "description": "Maintains a structured code wiki in code-docs/ to reduce token usage in Claude Code sessions. Auto-updates after every file edit via PostToolUse hook.",
-      "version": "0.4.0",
       "author": {
         "name": "Fedele Mantuano",
         "url": "https://github.com/fedelemantuano"
@@ -22,6 +21,24 @@
         "token-optimization",
         "hooks",
         "codebase-navigation"
+      ]
+    },
+    {
+      "name": "spec-driven",
+      "source": "./plugins/spec-driven",
+      "description": "Skills for repositories that write their decisions down. Ships conformance-review (citation-required review of uncommitted changes against the repo's specs, issues, ADRs, glossary, and standing rules) and prove-it-works (evidence-based verification that branch work actually runs, chaining into conformance-review on failure).",
+      "author": {
+        "name": "Fedele Mantuano",
+        "url": "https://github.com/fedelemantuano"
+      },
+      "homepage": "https://github.com/fedelemantuano/claude-plugins",
+      "license": "MIT",
+      "keywords": [
+        "code-review",
+        "conformance",
+        "spec",
+        "adr",
+        "pre-commit"
       ]
     }
   ]
